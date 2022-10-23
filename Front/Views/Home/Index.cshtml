@@ -1,0 +1,69 @@
+﻿@model List<EmpleadoViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<h1>Crud Empleados</h1>
+<a asp-action="Crear" class="btn btn-sm btn-primary">Crear Empleado</a>
+
+<div class="text-center">
+    <table class="table">
+  <thead>
+    <tr>
+     <th scope="col">Nombre</th>
+     <th scope="col">Apellido</th>
+     <th scope="col">Direccion</th>
+     <th scope="col">Telefono</th>
+     <th scope="col">Dpi</th>
+     <th scope="col">FechaNacimiento</th>
+     <th scope="col">FechaIngresoRegresitro</th>
+     <th scope="col">Puesto</th>
+     <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+            @foreach (var Item in Model)
+            {
+                 <tr>
+                    <td>@Item.Nombre</td>
+                    <td>@Item.Apellido</td>
+                    <td>@Item.Direccion</td>
+                    <td>@Item.Telefono</td>             
+                    <td>@Item.Dpi</td>
+                    <td>@Item.FechaNacimiento</td>
+                    <td>@Item.FechaIngresoRegresitro</td>
+                    <td>@Item.Puesto</td>
+                    <td>
+                        <a asp-action="modificar" asp-route-id="@Item.IdEmpleado" class="btn btn-sm btn-warning">
+                            Modificar
+                        </a>
+                       <input onclick= "eliminar(@Item.IdEmpleado);" class="btn btn-sm btn-danger" value="Eliminar"/>
+                        </td>
+                </tr>
+
+}
+   
+  </tbody>
+</table>
+
+
+
+
+
+
+</div>
+<script type="text/javascript">
+    function eliminar(id) {
+        if (confirm("esta seguro de eliminarlo C:")) {
+            url = "@Url.Content("~/Home/EliminarEmpleado/")" + id;
+            $.get(url).done((data) => {
+                if (data == "nice") {
+                    document.location.href = "@Url.Content("~/Home/Index")";
+                } else {
+                    alert("Error")
+                }
+            });
+        }
+    }
+</script>
